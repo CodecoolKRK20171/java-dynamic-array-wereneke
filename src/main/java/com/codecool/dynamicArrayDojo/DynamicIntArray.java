@@ -26,12 +26,27 @@ public class DynamicIntArray {
         this.actualIndex++;
     }
 
-    public void remove(int index) throws IndexOutOfBoundsException {
+    public void remove(int index) throws ArrayIndexOutOfBoundsException {
+
+        if (index<0 || index>=actualIndex) throw new ArrayIndexOutOfBoundsException();
+        for (int i=index; i<actualIndex-1; i++) {
+            array[i] = array[i+1];
+            array[i+1] = 0;  // higiena
+        }
+        actualIndex--;
 
     }
 
-    public void insert(int index, int value) throws IndexOutOfBoundsException {
+    public void insert(int index, int value) throws ArrayIndexOutOfBoundsException {
 
+        if (index > actualIndex+1 || index < 0) throw new ArrayIndexOutOfBoundsException();
+        actualIndex++;
+        int[] oldV = copy();
+        array[index] = value;
+
+        for (int i=index; i<actualIndex; i++) {
+            array[i+1] = oldV[i];
+        }
     }
 
     private void resize() {
