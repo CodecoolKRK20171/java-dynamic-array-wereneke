@@ -41,12 +41,10 @@ public class DynamicIntArray {
 
         if (index > actualIndex+1 || index < 0) throw new ArrayIndexOutOfBoundsException();
         actualIndex++;
-        int[] oldV = copy();
-        array[index] = value;
-
-        for (int i=index; i<actualIndex; i++) {
-            array[i+1] = oldV[i];
+        for (int i=actualIndex; i>index; i--) {
+            array[i] = array[i-1];
         }
+        array[index] = value;
     }
 
     private void resize() {
